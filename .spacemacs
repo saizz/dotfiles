@@ -36,19 +36,36 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     helm
-     ;; auto-completion
-     ;; better-defaults
+     (auto-completion :variables
+                      auto-completion-return-key-behavior 'complete
+                      auto-completion-tab-key-behavior 'cycle
+                      auto-completion-complete-with-key-sequence nil
+                      auto-completion-complete-with-key-sequence-delay 0.0
+                      auto-completion-enable-help-tooltip t
+                      spacemacs-default-company-backends '(company-files company-capf)
+                      auto-completion-private-snippets-directory nil)
+     better-defaults
+     colors
      emacs-lisp
-     ;; git
-     ;; markdown
-     ;; org
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
+     git
+     (go :variables go-tab-width 4)
+     helm
+     html
+     javascript
+     markdown
+     org
+     plantuml
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom)
      ;; spell-checking
-     ;; syntax-checking
-     ;; version-control
+     syntax-checking
+     themes-megapack
+     typescript
+     (version-control :variables
+                      version-control-diff-tool 'diff-hl
+                      version-control-global-margin t)
+
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -126,17 +143,23 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
+   dotspacemacs-themes '(sanityinc-tomorrow-bright
+                         sanityinc-tomorrow-day
+                         sanityinc-solarized-dark
+                         sanityinc-solarized-light
+                         monokai
+                         leuven
+                         spacemacs-dark
                          spacemacs-light)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+   dotspacemacs-default-font '("Myrica M for Powerline"
+                               :size 14
                                :weight normal
                                :width normal
-                               :powerline-scale 1.1)
+                               :powerline-scale 1.3)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
@@ -161,7 +184,7 @@ values."
    ;; works in the GUI. (default nil)
    dotspacemacs-distinguish-gui-tab nil
    ;; If non nil `Y' is remapped to `y$' in Evil states. (default nil)
-   dotspacemacs-remap-Y-to-y$ nil
+   dotspacemacs-remap-Y-to-y$ t
    ;; If non-nil, the shift mappings `<' and `>' retain visual state if used
    ;; there. (default t)
    dotspacemacs-retain-visual-state-on-shift t
@@ -280,7 +303,7 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup nil
+   dotspacemacs-whitespace-cleanup 'trailing
    ))
 
 (defun dotspacemacs/user-init ()
@@ -290,6 +313,10 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+
+  ;; magit
+  (setq-default git-magit-status-fullscreen t)
+
   )
 
 (defun dotspacemacs/user-config ()
@@ -299,6 +326,49 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+
+  ;; create backup file in ~/.emacs.d/backup
+  ;; (setq make-backup-files t)
+  ;; (setq backup-directory-alist
+  ;;       (cons (cons "\\.*$" (expand-file-name "~/.emacs.d/backup"))
+  ;;             backup-directory-alist))
+
+  ;; ;; create auto-save file in ~/.emacs.d/backup
+  ;; (setq auto-save-file-name-transforms
+  ;;       `((".*" ,(expand-file-name "~/.emacs.d/backup/") t)))
+
+  ;; reload file when another process update it
+  (global-auto-revert-mode 1)
+
+  ;; can delete selected reigon
+  (delete-selection-mode t)
+
+  ;; scroll by mouse wheel 3 line at a time
+  (setq mouse-wheel-scroll-amount '(3 ((shift) . 1)))
+  ;; don't accelerate scrolling
+  (setq mouse-wheel-progressive-speed nil)
+  ;; scroll window under mouse
+  (setq mouse-wheel-follow-mouse 't)
+
+  ;; company
+  (global-company-mode)
+
+  ;; migemo for helm
+  (with-eval-after-load "helm"
+    (helm-migemo-mode +1))
+
+  ;; helm-ag
+  ;; use ripgrep insted of ag
+  (setq helm-ag-base-command "rg --vimgrep --no-heading")
+
+  ;; diff-hl
+  ;(setq diff-hl-side 'left)
+
+  ;; key binding
+  (global-set-key (kbd "C-h") 'backward-delete-char)
+  ;(define-key helm-map (kbd "C-h") 'delete-backward-char)
+  ;(define-key helm-find-files-map (kbd "C-h") 'delete-backward-char)
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
