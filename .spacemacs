@@ -71,7 +71,12 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages
+   '(
+     cursor-chg
+     mozc
+     path-headerline-mode
+     )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -152,7 +157,7 @@ values."
                          spacemacs-dark
                          spacemacs-light)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
-   dotspacemacs-colorize-cursor-according-to-state t
+   dotspacemacs-colorize-cursor-according-to-state nil
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Myrica M for Powerline"
@@ -336,6 +341,20 @@ you should place your code here."
   ;; ;; create auto-save file in ~/.emacs.d/backup
   ;; (setq auto-save-file-name-transforms
   ;;       `((".*" ,(expand-file-name "~/.emacs.d/backup/") t)))
+
+  ;; display file path in headerline
+  (require 'path-headerline-mode)
+  (path-headerline-mode 1)
+
+  ;; input method
+  (require 'mozc)
+  (setq default-input-method "japanese-mozc")
+  (global-set-key (kbd "C-j") 'toggle-input-method)
+
+  ;; cursor change
+  (require 'cursor-chg)
+  (toggle-cursor-type-when-idle 1)
+  (change-cursor-mode 1)
 
   ;; reload file when another process update it
   (global-auto-revert-mode 1)
