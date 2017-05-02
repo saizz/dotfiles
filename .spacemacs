@@ -31,19 +31,13 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     (auto-completion :variables
-                      auto-completion-return-key-behavior 'complete
-                      auto-completion-tab-key-behavior 'cycle
-                      auto-completion-complete-with-key-sequence nil
-                      auto-completion-complete-with-key-sequence-delay 0.0
-                      auto-completion-enable-help-tooltip t
-                      spacemacs-default-company-backends '(company-files company-capf)
-                      auto-completion-private-snippets-directory nil)
+     auto-completion
      better-defaults
      colors
      emacs-lisp
@@ -112,7 +106,7 @@ values."
    ;; when the current branch is not `develop'. Note that checking for
    ;; new versions works via git commands, thus it calls GitHub services
    ;; whenever you start Emacs. (default nil)
-   dotspacemacs-check-for-update nil
+   dotspacemacs-check-for-update t
    ;; If non-nil, a form that evaluates to a package directory. For example, to
    ;; use different package directories for different Emacs versions, set this
    ;; to `emacs-version'.
@@ -160,8 +154,8 @@ values."
    dotspacemacs-colorize-cursor-according-to-state nil
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Myrica M for Powerline"
-                               :size 14
+   dotspacemacs-default-font '("Source Han Code JP R"
+                               :size 12
                                :weight normal
                                :width normal
                                :powerline-scale 1.3)
@@ -349,11 +343,12 @@ you should place your code here."
   ;; input method
   (require 'mozc)
   (setq default-input-method "japanese-mozc")
-  (global-set-key (kbd "C-j") 'toggle-input-method)
+  (global-set-key (kbd "C-'") 'toggle-input-method)
 
+  (blink-cursor-mode)
   ;; cursor change
   (require 'cursor-chg)
-  (toggle-cursor-type-when-idle 1)
+  ;(toggle-cursor-type-when-idle 1)
   (change-cursor-mode 1)
 
   ;; reload file when another process update it
