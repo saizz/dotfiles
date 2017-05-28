@@ -42,7 +42,10 @@ values."
      colors
      emacs-lisp
      git
-     (go :variables go-tab-width 4)
+     (go :variables
+         go-tab-width 4
+         go-use-gometalinter t
+         gofmt-command "goimports")
      helm
      html
      javascript
