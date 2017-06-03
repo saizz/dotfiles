@@ -44,7 +44,7 @@ values."
      git
      (go :variables
          go-tab-width 4
-         go-use-gometalinter t
+         ;;go-use-gometalinter t
          gofmt-command "goimports")
      helm
      html
@@ -73,6 +73,7 @@ values."
      cursor-chg
      mozc
      path-headerline-mode
+     dracula-theme
      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -145,7 +146,8 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(sanityinc-tomorrow-bright
+   dotspacemacs-themes '(dracula
+                         sanityinc-tomorrow-bright
                          sanityinc-tomorrow-day
                          sanityinc-solarized-dark
                          sanityinc-solarized-light
@@ -161,7 +163,7 @@ values."
                                :size 12
                                :weight normal
                                :width normal
-                               :powerline-scale 1.3)
+                               :powerline-scale 1.0)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
@@ -386,7 +388,12 @@ you should place your code here."
   ;(define-key helm-map (kbd "C-h") 'delete-backward-char)
   ;(define-key helm-find-files-map (kbd "C-h") 'delete-backward-char)
 
-  )
+  ;; show neo tree
+  (neotree-show)
 
+  ;; google translate
+  (setq google-translate-default-target-language "ja")
+
+  )
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
