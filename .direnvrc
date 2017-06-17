@@ -1,0 +1,40 @@
+use_go() {
+  local version=$1
+  local found=0
+  while read line; do
+    name=${line}
+    if [ "${name}" = "${version}" ]; then
+      path="${GOENV_ROOT}/versions/${name}/bin"
+      PATH_add ${path}
+      found=1
+      break
+    fi
+  done < <(goenv version-names | grep -v gae)
+
+  if [ "$found" -eq 0 ]; then
+    echo "go '${version}' is not installed." >&2
+    return 1
+  fi
+  return 0
+}
+
+use_gae() {
+  local version=$1
+  local found=0
+  while read line; do
+    name=$(echo ${line} | cut -d '-' -f 2)
+    if [ "${name}" = "${version}" ]; then
+      path="${GOENV_ROOT}/versions/gae-${name}"
+      PATH_add ${path}
+      found=1
+      break
+    fi
+  done < <(goenv version-names | grep gae)
+
+  if [ "$found" -eq 0 ]; then
+    echo "gae '${version}' is not installed." >&2
+    return 1
+  fi
+  return 0
+}
+
