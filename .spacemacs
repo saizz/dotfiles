@@ -348,7 +348,7 @@ you should place your code here."
   ;; input method
   (require 'mozc)
   (setq default-input-method "japanese-mozc")
-  (global-set-key (kbd "C-'") 'toggle-input-method)
+  (global-set-key (kbd "C-j") 'toggle-input-method)
 
   (blink-cursor-mode)
   ;; cursor change
@@ -393,6 +393,9 @@ you should place your code here."
 
   ;; google translate
   (setq google-translate-default-target-language "ja")
+
+  ;; update yank from other X applications copy
+  (fset 'evil-visual-update-x-selection 'ignore)
 
   )
 ;; Do not write anything past this comment. This is where Emacs will
