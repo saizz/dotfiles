@@ -31,7 +31,6 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -52,6 +51,7 @@ values."
      markdown
      org
      plantuml
+     ruby
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
@@ -62,6 +62,7 @@ values."
      (version-control :variables
                       version-control-diff-tool 'diff-hl
                       version-control-global-margin t)
+     yaml
 
      )
    ;; List of additional packages that will be installed without being
@@ -389,7 +390,7 @@ you should place your code here."
   ;(define-key helm-find-files-map (kbd "C-h") 'delete-backward-char)
 
   ;; show neo tree
-  (neotree-show)
+  ;(neotree-show)
 
   ;; google translate
   (setq google-translate-default-target-language "ja")
