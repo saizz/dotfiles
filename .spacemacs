@@ -31,7 +31,6 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -46,12 +45,14 @@ values."
          go-tab-width 4
          ;;go-use-gometalinter t
          gofmt-command "goimports")
-     helm
+;     helm
      html
+     ivy
      javascript
      markdown
      org
      plantuml
+     ruby
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
@@ -62,6 +63,7 @@ values."
      (version-control :variables
                       version-control-diff-tool 'diff-hl
                       version-control-global-margin t)
+     yaml
 
      )
    ;; List of additional packages that will be installed without being
@@ -70,7 +72,9 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages
    '(
+     avy-migemo
      cursor-chg
+     migemo
      mozc
      path-headerline-mode
      dracula-theme
@@ -319,7 +323,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
 
   ;; magit
-  (setq-default git-magit-status-fullscreen t)
+  ;(setq-default git-magit-status-fullscreen t)
 
   )
 
@@ -341,6 +345,23 @@ you should place your code here."
   ;; (setq auto-save-file-name-transforms
   ;;       `((".*" ,(expand-file-name "~/.emacs.d/backup/") t)))
 
+  ;; magit
+  (with-eval-after-load "magit"
+    (defadvice magit-status (around magit-fullscreen activate)
+      (window-configuration-to-register :magit-fullscreen)
+      ad-do-it
+      (delete-other-windows))
+
+    (defun my/magit-quit-session ()
+      (interactive)
+      (kill-buffer)
+      (jump-to-register :magit-fullscreen))
+
+    (define-key magit-status-mode-map (kbd "C-g") 'my/magit-quit-session)
+
+    (defadvice git-commit-commit (after move-to-magit-buffer activate)
+      (delete-window))
+  )
   ;; display file path in headerline
   (require 'path-headerline-mode)
   (path-headerline-mode 1)
@@ -372,13 +393,40 @@ you should place your code here."
   ;; company
   (global-company-mode)
 
+  ;; migemo
+  (require 'migemo)
+  (setq migemo-command "cmigemo")
+  (setq migemo-options '("-q" "--emacs" "-i" "\a"))
+  (cond
+   ((eq system-type 'darwin)
+    (setq migemo-dictionary "/usr/local/share/migemo/utf-8/migemo-dict")
+    )
+   ((eq system-type 'gnu/linux)
+    (setq migemo-dictionary "/usr/share/cmigemo/utf-8/migemo-dict")
+    )
+   ((eq system-type 'windows-nt)
+    (setq migemo-dictionary "c:/app/cmigemo-default-win64/dict/utf-8/migemo-dict")
+    ))
+  (setq migemo-user-dictionary nil)
+  (setq migemo-regex-dictionary nil)
+  (setq migemo-coding-system 'utf-8-unix)
+  ;; initialize migemo
+  (migemo-init)
+
   ;; migemo for helm
   (with-eval-after-load "helm"
     (helm-migemo-mode +1))
 
+  ;; migemo for avy
+  (require 'avy-migemo)
+  (avy-migemo-mode 1)
+
+  ;; migeno for swiper
+  ;(require 'avy-migemo-e.g.swiper)
+
   ;; helm-ag
   ;; use ripgrep insted of ag
-  (setq helm-ag-base-command "rg --vimgrep --no-heading")
+;  (setq helm-ag-base-command "rg --vimgrep --no-heading")
 
   ;; diff-hl
   ;(setq diff-hl-side 'left)
@@ -389,7 +437,7 @@ you should place your code here."
   ;(define-key helm-find-files-map (kbd "C-h") 'delete-backward-char)
 
   ;; show neo tree
-  (neotree-show)
+  ;(neotree-show)
 
   ;; google translate
   (setq google-translate-default-target-language "ja")
