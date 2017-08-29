@@ -72,11 +72,12 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages
    '(
+     mozc
+     migemo
      avy-migemo
      cursor-chg
-     migemo
-     mozc
      path-headerline-mode
+     smart-newline
      dracula-theme
      )
    ;; A list of packages that cannot be updated.
@@ -369,7 +370,7 @@ you should place your code here."
   ;; input method
   (require 'mozc)
   (setq default-input-method "japanese-mozc")
-  (global-set-key (kbd "C-j") 'toggle-input-method)
+  (global-set-key (kbd "C-o") 'toggle-input-method)
 
   (blink-cursor-mode)
   ;; cursor change
@@ -430,6 +431,19 @@ you should place your code here."
 
   ;; diff-hl
   ;(setq diff-hl-side 'left)
+
+  ;; smart-newline
+  (require 'smart-newline)
+  (smart-newline-mode 1)
+  (global-set-key (kbd "C-m") 'smart-newline)
+
+  ;; smart other-window-or-split
+  (defun other-window-or-split ()
+    (interactive)
+    (when (one-window-p)
+      (split-window-horizontally))
+    (other-window 1))
+  (global-set-key (kbd "C-t") 'other-window-or-split)
 
   ;; key binding
   (global-set-key (kbd "C-h") 'backward-delete-char)
