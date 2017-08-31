@@ -73,9 +73,12 @@ values."
    dotspacemacs-additional-packages
    '(
      mozc
+     mozc-popup
+     mozc-temp
      migemo
      avy-migemo
-     cursor-chg
+     smart-cursor-color
+     ;cursor-chg
      path-headerline-mode
      smart-newline
      dracula-theme
@@ -370,13 +373,19 @@ you should place your code here."
   ;; input method
   (require 'mozc)
   (setq default-input-method "japanese-mozc")
+  ;(setq mozc-candidate-style 'echo-area)
+  (require 'mozc-popup)
+  (setq mozc-candidate-style 'popup)
   (global-set-key (kbd "C-o") 'toggle-input-method)
+  ;; mozc-temp
+  (global-set-key (kbd "S-SPC") 'mozc-temp-convert)
 
   (blink-cursor-mode)
   ;; cursor change
-  (require 'cursor-chg)
+  ;(require 'cursor-chg)
   ;(toggle-cursor-type-when-idle 1)
-  (change-cursor-mode 1)
+  ;(change-cursor-mode 1)
+  (smart-cursor-color-mode 1)
 
   ;; reload file when another process update it
   (global-auto-revert-mode 1)
@@ -446,12 +455,9 @@ you should place your code here."
   (global-set-key (kbd "C-t") 'other-window-or-split)
 
   ;; key binding
-  (global-set-key (kbd "C-h") 'backward-delete-char)
+  ;(global-set-key (kbd "C-h") 'backward-delete-char)
   ;(define-key helm-map (kbd "C-h") 'delete-backward-char)
   ;(define-key helm-find-files-map (kbd "C-h") 'delete-backward-char)
-
-  ;; show neo tree
-  ;(neotree-show)
 
   ;; google translate
   (setq google-translate-default-target-language "ja")
