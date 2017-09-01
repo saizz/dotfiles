@@ -6,6 +6,7 @@ use_go() {
     if [ "${name}" = "${version}" ]; then
       path="${GOENV_ROOT}/versions/${name}/bin"
       PATH_add ${path}
+      export GOROOT="${GOENV_ROOT}/versions/${name}"
       found=1
       break
     fi
