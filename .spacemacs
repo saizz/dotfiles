@@ -72,6 +72,8 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages
    '(
+     all-the-icons
+     all-the-icons-dired
      mozc
      mozc-popup
      mozc-temp
@@ -348,6 +350,13 @@ you should place your code here."
   ;; ;; create auto-save file in ~/.emacs.d/backup
   ;; (setq auto-save-file-name-transforms
   ;;       `((".*" ,(expand-file-name "~/.emacs.d/backup/") t)))
+
+  ;; all the icons
+  (require 'all-the-icons)
+  ;; all the icons dired
+  (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+  ;; for neotree
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 
   ;; magit
   (with-eval-after-load "magit"
