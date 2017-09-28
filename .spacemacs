@@ -457,7 +457,8 @@ you should place your code here."
   (global-set-key (kbd "C-t") 'other-window-or-split)
 
   ;; key binding
-  ;(global-set-key (kbd "C-h") 'backward-delete-char)
+  (global-set-key (kbd "C-h") 'backward-delete-char)
+  (global-set-key (kbd "<F1>") help-map)
   ;(define-key helm-map (kbd "C-h") 'delete-backward-char)
   ;(define-key helm-find-files-map (kbd "C-h") 'delete-backward-char)
 
