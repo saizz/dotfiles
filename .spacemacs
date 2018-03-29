@@ -44,18 +44,24 @@ values."
      (go :variables
          go-tab-width 4
          ;;go-use-gometalinter t
-         gofmt-command "goimports")
+         gofmt-command "goimports"
+         godoc-at-point-function 'godoc-gogetdoc
+         )
 ;     helm
      html
      ivy
+     java
      javascript
      markdown
      org
      plantuml
      ruby
+     rust
+     scala
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
+     sql
      ;; spell-checking
      syntax-checking
      themes-megapack
@@ -74,6 +80,7 @@ values."
    '(
      all-the-icons
      all-the-icons-dired
+     spaceline-all-the-icons
      mozc
      mozc-popup
      mozc-temp
@@ -156,13 +163,19 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
+   dotspacemacs-themes '(monokai
+                         sanityinc-tomorrow-bright
+                         sanityinc-tomorrow-day
+                         spacemacs-dark
                          spacemacs-light)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state nil
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Han Code JP R"
+   dotspacemacs-default-font '(
+;                              "Myrica M"
+;                               :size 15
+                               "Source Han Code JP M"
                                :size 12
                                :weight normal
                                :width normal
@@ -324,6 +337,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; magit
   ;(setq-default git-magit-status-fullscreen t)
 
+  ;; ensime for scala layer
+  ;(push '("melpa-stable" . "stable.melpa.org/packages/") configuration-layer-elpa-archives)
+  ;(push '(ensime . "melpa-stable") package-pinned-packages)
+
   )
 
 (defun dotspacemacs/user-config ()
@@ -344,12 +361,15 @@ you should place your code here."
   ;; (setq auto-save-file-name-transforms
   ;;       `((".*" ,(expand-file-name "~/.emacs.d/backup/") t)))
 
-  ;; all the icons
+  ;;; all the icons
   (require 'all-the-icons)
   ;; all the icons dired
   (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
   ;; for neotree
   (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+  ;; for spaceline
+  (require 'spaceline-all-the-icons)
+  (setq mode-line-format 'spaceline-all-the-icons)
 
   ;; magit
   (with-eval-after-load "magit"
@@ -426,8 +446,8 @@ you should place your code here."
   (migemo-init)
 
   ;; migemo for helm
-  (with-eval-after-load "helm"
-    (helm-migemo-mode +1))
+  ;(with-eval-after-load "helm"
+  ;  (helm-migemo-mode +1))
 
   ;; migemo for avy
   (require 'avy-migemo)
@@ -457,7 +477,7 @@ you should place your code here."
   (global-set-key (kbd "C-t") 'other-window-or-split)
 
   ;; key binding
-  ;(global-set-key (kbd "C-h") 'backward-delete-char)
+  (global-set-key (kbd "C-h") 'backward-delete-char)
   ;(define-key helm-map (kbd "C-h") 'delete-backward-char)
   ;(define-key helm-find-files-map (kbd "C-h") 'delete-backward-char)
 
@@ -466,6 +486,9 @@ you should place your code here."
 
   ;; update yank from other X applications copy
   (fset 'evil-visual-update-x-selection 'ignore)
+
+  ;; open junk file
+  (setq open-junk-file-format "~/memo/junk/%Y-%m%d-%H%M%S.")
 
   )
 ;; Do not write anything past this comment. This is where Emacs will
