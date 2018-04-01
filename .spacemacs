@@ -53,7 +53,11 @@ values."
      java
      javascript
      markdown
-     org
+     (org :variables
+          org-enable-reveal-js-support t
+          org-enable-org-journal-support t
+          org-journal-dir "~/Dropbox/org/journal/"
+          )
      plantuml
      ruby
      rust
@@ -176,7 +180,7 @@ values."
 ;                              "Myrica M"
 ;                               :size 15
                                "Source Han Code JP M"
-                               :size 12
+                               :size 15
                                :weight normal
                                :width normal
                                :powerline-scale 1.0)
@@ -351,6 +355,8 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
+  (setq my-dropbox-directory "~/Dropbox/")
+
   ;; create backup file in ~/.emacs.d/backup
   ;; (setq make-backup-files t)
   ;; (setq backup-directory-alist
@@ -489,7 +495,22 @@ you should place your code here."
   (fset 'evil-visual-update-x-selection 'ignore)
 
   ;; open junk file
-  (setq open-junk-file-format "~/memo/junk/%Y-%m%d-%H%M%S.")
+  (setq open-junk-file-format "~/Dropbox/org/junk/%Y-%m-%d.org")
+
+  ;; org
+  (setq org-directory "~/Dropbox/org/")
+
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "WAIT(w)" "|" "DONE(d)" "CANCELED(c)" "SOMEDAY(s)")))
+  (setq org-capture-templates
+        '(("t" "Todo" entry (file+headline "gtd.org" "Tasks")
+           "* TODO %?\nEntered on %U\n")
+          ("j" "Journal" entry (file+datetree "journal.org")
+           "* %?\n  %U\n  %i\n  %a")
+          ("n" "Note" entry (file+headline "notes.org" "Notes")
+           "* %?\n  %U\n  %i")
+          ))
+  (setq org-agenda-files (list org-directory))
 
   )
 ;; Do not write anything past this comment. This is where Emacs will
