@@ -38,6 +38,7 @@ values."
      ;; ----------------------------------------------------------------
      auto-completion
      better-defaults
+     chrome
      colors
      emacs-lisp
      git
@@ -54,9 +55,13 @@ values."
      javascript
      markdown
      (org :variables
+          org-enable-github-support t
           org-enable-reveal-js-support t
           org-enable-org-journal-support t
           org-journal-dir "~/Dropbox/org/journal/"
+          org-journal-file-format "%Y-%m-%d"
+          org-journal-date-prefix "#+TITLE: "
+          org-journal-date-format "%A, %B %d %Y"
           )
      plantuml
      ruby
@@ -495,7 +500,7 @@ you should place your code here."
   (fset 'evil-visual-update-x-selection 'ignore)
 
   ;; open junk file
-  (setq open-junk-file-format "~/Dropbox/org/junk/%Y-%m-%d.org")
+  (setq open-junk-file-format "~/Dropbox/junk/%Y-%m-%d_")
 
   ;; org
   (setq org-directory "~/Dropbox/org/")
@@ -512,6 +517,35 @@ you should place your code here."
           ))
   (setq org-agenda-files (list org-directory))
 
+  (defun cleanup-org-tables ()
+    (save-excursion
+      (goto-char (point-min))
+      (while (search-forward "-+-" nil t) (replace-match "-|-"))))
+  (add-hook 'markdown-mode-hook 'orgtbl-mode)
+  (add-hook 'markdown-mode-hook
+            #'(lambda()
+                (add-hook 'after-save-hook 'cleanup-org-tables  nil 'make-it-local)))
+
   )
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (ox-gfm gmail-message-mode ham-mode html-to-markdown flymd edit-server zenburn-theme zen-and-art-theme yasnippet-snippets yaml-mode xterm-color ws-butler winum white-sand-theme which-key wgrep web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme toml-mode toc-org tide tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit symon sunny-day-theme sublime-themes subatomic256-theme subatomic-theme string-inflection sql-indent spaceline-all-the-icons spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smex smeargle smart-newline smart-cursor-color slim-mode shell-pop seti-theme scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocop rspec-mode robe reverse-theme restart-emacs request rebecca-theme rbenv rake rainbow-mode rainbow-identifiers rainbow-delimiters railscasts-theme racer purple-haze-theme pug-mode professional-theme popwin plantuml-mode planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme persp-mode path-headerline-mode password-generator paradox ox-reveal overseer orgit organic-green-theme org-projectile org-present org-pomodoro org-mime org-journal org-download org-bullets org-brain open-junk-file omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noflet noctilux-theme neotree naquadah-theme nameless mwim mvn mustang-theme multi-term mozc-temp mozc-popup move-text monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minitest minimal-theme meghanada maven-test-mode material-theme markdown-toc majapahit-theme magit-gitflow madhat2r-theme macrostep lush-theme lorem-ipsum livid-mode linum-relative link-hint light-soap-theme less-css-mode json-mode js2-refactor js-doc jbeans-theme jazz-theme ivy-xref ivy-purpose ivy-hydra ir-black-theme inkpot-theme indent-guide impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation heroku-theme hemisu-theme helm-make hc-zenburn-theme gruvbox-theme gruber-darker-theme groovy-mode groovy-imports grandshell-theme gradle-mode gotham-theme google-translate golden-ratio godoctor go-tag go-rename go-guru go-eldoc gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md gandalf-theme fuzzy flycheck-rust flycheck-pos-tip flx-ido flatui-theme flatland-theme fill-column-indicator farmhouse-theme fancy-battery eyebrowse expand-region exotica-theme exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu espresso-theme eshell-z eshell-prompt-extras esh-help ensime emmet-mode elisp-slime-nav editorconfig dumb-jump dracula-theme django-theme diminish diff-hl define-word darktooth-theme darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme counsel-projectile counsel-css company-web company-tern company-statistics company-go company-emacs-eclim column-enforce-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized color-identifiers-mode coffee-mode clues-theme clean-aindent-mode chruby cherry-blossom-theme centered-cursor-mode cargo busybee-theme bundler bubbleberry-theme browse-at-remote birds-of-paradise-plus-theme badwolf-theme avy-migemo auto-yasnippet auto-highlight-symbol auto-compile apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme all-the-icons-dired alect-themes aggressive-indent afternoon-theme adaptive-wrap ace-window ace-link ac-ispell))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+)
