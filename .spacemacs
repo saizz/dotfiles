@@ -500,7 +500,7 @@ you should place your code here."
   (fset 'evil-visual-update-x-selection 'ignore)
 
   ;; open junk file
-  (setq open-junk-file-format "~/Dropbox/junk/%Y-%m-%d_")
+  (setq open-junk-file-format "~/Dropbox/junk/%Y-%m-%d_%H%M%S_")
 
   ;; org
   (setq org-directory "~/Dropbox/org/")
