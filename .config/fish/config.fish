@@ -1,7 +1,7 @@
 set -g theme_date_format "+%H:%M:%S"
 
 # google cloud sdk
-source $HOME/opt/google/google-cloud-sdk/path.fish.inc
+source $HOME/opt/google-cloud-sdk/path.fish.inc
 
 # gopath
 set -x GOPATH $HOME/.gopath
