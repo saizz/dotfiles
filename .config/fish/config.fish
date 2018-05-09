@@ -1,4 +1,11 @@
+# omf/bobthefish
 set -g theme_date_format "+%H:%M:%S"
+
+# ghq
+set GHQ_SELECTOR fzf
+
+# fzf
+set FZF_LEGACY_KEYBINDINGS 0
 
 # google cloud sdk
 source $HOME/opt/google-cloud-sdk/path.fish.inc
@@ -16,5 +23,4 @@ eval (direnv hook fish)
 
 source $HOME/.ghq/github.com/saizz/dotfiles/.config/fish/functions.fish
 source $HOME/.ghq/github.com/saizz/dotfiles/.config/fish/aliases.fish
-#source $HOME/.ghq/github.com/saizz/dotfiles/.config/fish/keybindings.fish
 
