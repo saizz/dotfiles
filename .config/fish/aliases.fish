@@ -1,5 +1,2 @@
-# change directory upper
-balias cdu 'bd'
-
-# Git
-balias g 'git'
+# change directory selected from z -l
+balias d 'fzf_select_z_recentd'

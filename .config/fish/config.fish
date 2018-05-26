@@ -23,4 +23,4 @@ eval (direnv hook fish)
 
 source $HOME/.ghq/github.com/saizz/dotfiles/.config/fish/functions.fish
 source $HOME/.ghq/github.com/saizz/dotfiles/.config/fish/aliases.fish
-
+source $HOME/.ghq/github.com/saizz/dotfiles/.config/fish/my_fish_prompt.fish
