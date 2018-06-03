@@ -227,10 +227,12 @@ It should only modify the values of Spacemacs settings."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '(
-;                              "Myrica M"
+;                               "Myrica M"
 ;                               :size 15
-                               "Source Han Code JP M"
-                               :size 15
+                               "NasuM"
+                               :size 18
+;                               "Source Han Code JP M"
+;                               :size 15
                                :weight normal
                                :width normal)
 
@@ -535,7 +537,8 @@ before packages are loaded."
   (setq mozc-candidate-style 'popup)
   (global-set-key (kbd "C-o") 'toggle-input-method)
   ;; mozc-temp
-  (global-set-key (kbd "S-SPC") 'mozc-temp-convert)
+  ;(global-set-key (kbd "S-SPC") 'mozc-temp-convert)
+  (global-set-key (kbd "C-'") 'mozc-temp-convert)
 
   ;; cursor
   (blink-cursor-mode)
