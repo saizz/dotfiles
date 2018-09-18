@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -xe
+
+ln -si ~/.ghq/github.com/saizz/dotfiles/.config/fish/fishfile ~/.config/fish/fishfile
+ln -si ~/.ghq/github.com/saizz/dotfiles/.config/fish/config.fish ~/.config/fish/config.fish
