@@ -48,7 +48,7 @@ This function should only modify configuration layer settings."
      (go :variables
          go-tab-width 4
          go-format-before-save t
-         ;;go-use-gometalinter t
+         ;go-use-gometalinter t
          go-use-golangci-lint t
          gofmt-command "goimports"
          godoc-at-point-function 'godoc-gogetdoc
@@ -56,8 +56,10 @@ This function should only modify configuration layer settings."
      helm
      html
 ;     ivy
+     imenu-list
      java
      javascript
+     json
      markdown
      (org :variables
           org-enable-github-support t
@@ -68,7 +70,9 @@ This function should only modify configuration layer settings."
           org-journal-date-prefix "#+TITLE: "
           org-journal-date-format "%A, %B %d %Y"
           )
+     php
      plantuml
+     python
      ruby
      rust
      scala
@@ -97,6 +101,7 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages
    '(
+     graphql-mode
      mozc
      mozc-popup
      mozc-temp
@@ -448,7 +453,7 @@ It should only modify the values of Spacemacs settings."
    ;; %z - mnemonics of buffer, terminal, and keyboard coding systems
    ;; %Z - like %z, but including the end-of-line format
    ;; (default "%I@%S")
-   dotspacemacs-frame-title-format "%I@%S"
+   dotspacemacs-frame-title-format "%f"
 
    ;; Format specification for setting the icon title format
    ;; (default nil - same as frame-title-format)
