@@ -12,7 +12,7 @@ This function should only modify configuration layer settings."
    dotspacemacs-distribution 'spacemacs
 
    ;; Lazy installation of layers (i.e. layers are installed only when a file
-   ;; with a (add-hook 'markdown-mode-hook 'orgtbl-mode)supported type is opened). Possible values are `all', `unused'
+   ;; with a supported type is opened). Possible values are `all', `unused'
    ;; and `nil'. `unused' will lazy install only unused layers (i.e. layers
    ;; not listed in variable `dotspacemacs-configuration-layers'), `all' will
    ;; lazy install any layer that support lazy installation even the layers
@@ -40,6 +40,7 @@ This function should only modify configuration layer settings."
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      auto-completion
+     ansible
      better-defaults
      chrome
      colors
@@ -52,15 +53,23 @@ This function should only modify configuration layer settings."
          go-use-golangci-lint t
          gofmt-command "goimports"
          godoc-at-point-function 'godoc-gogetdoc
+         go-backend 'lsp
          )
      helm
      html
 ;     ivy
      imenu-list
      java
-     javascript
+     (javascript :variables
+                 node-add-modules-path t
+                 javascript-fmt-tool 'prettier
+                 js2-basic-offset 2
+                 js-indent-level 2
+                 )
      json
      markdown
+     lsp
+     node
      (org :variables
           org-enable-github-support t
           org-enable-reveal-js-support t
@@ -83,6 +92,7 @@ This function should only modify configuration layer settings."
      sql
      ;; spell-checking
      syntax-checking
+     tern
      themes-megapack
      typescript
      (version-control :variables
@@ -254,7 +264,7 @@ It should only modify the values of Spacemacs settings."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Han Code JP R"
-                               :size 14
+                               :size 12
                                :weight normal
                                :width normal)
 
@@ -270,7 +280,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; The leader key accessible in `emacs state' and `insert state'
    ;; (default "M-m")
-   dotspacemacs-emacs-leader-key "M-m"
+   dotspacemacs-emacs-leader-key "C-q"
 
    ;; Major mode leader key is a shortcut key which is the equivalent of
    ;; pressing `<leader> m`. Set it to `nil` to disable it. (default ",")
@@ -278,7 +288,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; Major mode leader key accessible in `emacs state' and `insert state'.
    ;; (default "C-M-m")
-   dotspacemacs-major-mode-emacs-leader-key "C-M-m"
+   dotspacemacs-major-mode-emacs-leader-key "C-M-q"
 
    ;; These variables control whether separate commands are bound in the GUI to
    ;; the key pairs `C-i', `TAB' and `C-m', `RET'.
@@ -510,11 +520,21 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
+  (setq flycheck-golangci-lint-enable-all t)
+
+  ;; font hack
+  (set-fontset-font nil '(#x80 . #x10ffff) (font-spec :family "Source Han Code JP"))
+  (setq use-default-font-for-symbols nil)
+
   ;; persistent scratch buffer
   (persistent-scratch-setup-default)
 
   (setq my-dropbox-directory "~/Dropbox/")
   (setq neo-theme 'icons)
+
+  ;; mouse wheel scroll
+  (setq mouse-wheel-scroll-amount '(3 ((shift) . 3) ((control) . nil)))
+  (setq mouse-wheel-progressive-speed nil)
 
   ;; input method
   (with-eval-after-load 'mozc
@@ -603,6 +623,12 @@ before packages are loaded."
       (split-window-horizontally))
     (other-window 1))
   (global-set-key (kbd "C-t") 'my/other-window-or-split)
+
+
+  ;; js2-mode
+  ;(setq js2-mode-show-parse-errors nil js2-mode-show-strict-warnings nil)
+  ;(eval-after-load 'js2-mode
+  ;  '(add-hook 'js2-mode-hook #'add-node-modules-path))
 
   ;; other key binding
   (global-set-key (kbd "C-h") 'backward-delete-char)
