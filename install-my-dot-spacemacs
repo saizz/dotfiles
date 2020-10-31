@@ -1,5 +1,9 @@
 #!/bin/bash
 
-set -xe
+set -eu
 
-ln -si ~/.ghq/github.com/saizz/dotfiles/.spacemacs ~/.spacemacs
+dst_dir="$HOME/.spacemacs.d"
+if [ -d "$dst_dir" ]; then
+	mv $dst_dir ${dst_dir}.bak
+fi
+ln -si ghq/github.com/saizz/dotfiles/dot.spacemacs.d $dst_dir

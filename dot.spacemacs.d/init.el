@@ -40,10 +40,10 @@ This function should only modify configuration layer settings."
      ;; ----------------------------------------------------------------
      auto-completion
      better-defaults
-     (go :variables
-         go-tab-width 4)
      emacs-lisp
      git
+     (go :variables
+         go-tab-width 4)
      helm
      html
      imenu-list
@@ -57,10 +57,13 @@ This function should only modify configuration layer settings."
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
-     ; spell-checking
+     ;;spell-checking
      syntax-checking
      version-control
-     treemacs
+     (treemacs :variables
+               ;;treemacs-use-scope-type 'Perspectives
+               treemacs-use-git-mode 'deferred
+               treemacs-use-all-the-icons-theme t)
      yaml
      )
 
@@ -236,7 +239,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; Default font or prioritized list of fonts.
    dotspacemacs-default-font '("HackGenNerd Console"
-                               :size 10.0
+                               :size 16.0
                                :weight normal
                                :width normal)
 
@@ -576,6 +579,11 @@ before packages are loaded."
 
   (global-set-key (kbd "C-,") 'switch-to-prev-buffer)
   (global-set-key (kbd "C-.") 'switch-to-next-buffer)
+
+  (imenu-list-smart-toggle)
+
+  (spacemacs/treemacs-project-toggle)
+  (add-hook 'prog-mode-hook 'spacemacs/toggle-absolute-line-numbers-on)
 
   )
 
