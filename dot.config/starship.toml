@@ -1,0 +1,7 @@
+[aws]
+disabled = true
+
+[env_var]
+variable = "STARSHIP_SHELL"
+default = "iunknown shell"
+style = "green"
