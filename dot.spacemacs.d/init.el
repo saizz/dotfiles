@@ -47,6 +47,8 @@ This function should only modify configuration layer settings."
      helm
      html
      imenu-list
+     javascript
+     json
      lsp
      markdown
      themes-megapack
@@ -393,7 +395,7 @@ It should only modify the values of Spacemacs settings."
    ;;   :size-limit-kb 1000)
    ;; When used in a plist, `visual' takes precedence over `relative'.
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers t
 
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
@@ -533,7 +535,6 @@ before packages are loaded."
   (setq mozc-candidate-style 'echo-area)
   (global-set-key (kbd "<henkan>") #'mozc-temp-convert-dwim)
 
-
   ;; smart newline
   (smart-newline-mode 1)
   (global-set-key (kbd "RET") 'smart-newline)
@@ -572,18 +573,16 @@ before packages are loaded."
   ;;(define-key key-translation-map [?\C-h] [?\C-?])
   ;;(global-set-key (kbd "C-h") 'backward-delete-char)
 
-  (global-set-key (kbd "M-n") 'forward-paragraph)
-  (global-set-key (kbd "M-p") 'backward-paragraph)
-  (global-set-key (kbd "C-M-n") (lambda () (interactive) (scroll-up 3)))
-  (global-set-key (kbd "C-M-p") (lambda () (interactive) (scroll-down 3)))
+  (global-set-key (kbd "M-n") (lambda () (interactive) (scroll-up 3)))
+  (global-set-key (kbd "M-p") (lambda () (interactive) (scroll-down 3)))
+  (global-set-key (kbd "C-M-n") 'forward-paragraph)
+  (global-set-key (kbd "C-M-p") 'backward-paragraph)
 
   (global-set-key (kbd "C-,") 'switch-to-prev-buffer)
   (global-set-key (kbd "C-.") 'switch-to-next-buffer)
 
   (imenu-list-smart-toggle)
-
   (spacemacs/treemacs-project-toggle)
-  (add-hook 'prog-mode-hook 'spacemacs/toggle-absolute-line-numbers-on)
 
   )
 
@@ -601,7 +600,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (web-mode web-beautify tagedit slim-mode scss-mode sass-mode pug-mode prettier-js impatient-mode simple-httpd helm-css-scss haml-mode emmet-mode counsel-css company-web web-completion-data add-node-modules-path yaml-mode helm-gtags godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc ggtags flycheck-golangci-lint dap-mode posframe lsp-treemacs bui lsp-mode markdown-mode dash-functional counsel-gtags counsel swiper ivy company-go go-mode company ws-butler writeroom-mode winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree treemacs-projectile treemacs-persp treemacs-icons-dired toc-org symon symbol-overlay string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin pcre2el password-generator paradox overseer org-superstar open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flycheck-package flycheck-elsa flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu emr elisp-slime-nav editorconfig dumb-jump dotenv-mode diminish devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line))))
+    (tide typescript-mode tern nodejs-repl livid-mode skewer-mode js2-refactor js2-mode js-doc import-js grizzl web-mode web-beautify tagedit slim-mode scss-mode sass-mode pug-mode prettier-js impatient-mode simple-httpd helm-css-scss haml-mode emmet-mode counsel-css company-web web-completion-data add-node-modules-path yaml-mode helm-gtags godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc ggtags flycheck-golangci-lint dap-mode posframe lsp-treemacs bui lsp-mode markdown-mode dash-functional counsel-gtags counsel swiper ivy company-go go-mode company ws-butler writeroom-mode winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree treemacs-projectile treemacs-persp treemacs-icons-dired toc-org symon symbol-overlay string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin pcre2el password-generator paradox overseer org-superstar open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flycheck-package flycheck-elsa flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu emr elisp-slime-nav editorconfig dumb-jump dotenv-mode diminish devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
