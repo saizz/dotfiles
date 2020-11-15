@@ -6,4 +6,4 @@ dst_dir="$HOME/.spacemacs.d"
 if [ -d "$dst_dir" ]; then
 	mv $dst_dir ${dst_dir}.bak
 fi
-ln -si ghq/github.com/saizz/dotfiles/dot.spacemacs.d $dst_dir
+ln -s dotfiles/dot.spacemacs.d $dst_dir
